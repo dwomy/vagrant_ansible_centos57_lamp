@@ -1,0 +1,11 @@
+- name: Install php
+  sudo: yes
+  yum: name=php state=present enablerepo=remi,remi-php55,epel
+
+- name: Install php package
+  sudo: yes
+  yum: name={{ item }} state=present enablerepo=remi,remi-php55,epel
+  with_items: php_packages
+
+- name: Configure php.ini
+  template: src=php.ini.tpl dest=/etc/php.ini

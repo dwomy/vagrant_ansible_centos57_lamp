@@ -1,0 +1,20 @@
+---
+- name: Vagrant_Ansible_CentOs57
+  hosts: vagrant
+  sudo: yes
+  connection: local
+  vars:
+    timezone: Asia/Tokyo
+  vars_files:
+    - vars/packages.yml
+  roles:
+    - init
+    - php
+    - apache
+    - mysql
+#    - common
+#    - nginx
+#    - postgresql
+#    - phpenv
+#    - phppgadmin
+#    - laravel

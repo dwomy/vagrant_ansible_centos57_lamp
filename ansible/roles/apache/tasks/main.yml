@@ -1,0 +1,34 @@
+---
+- name: Install httpd
+  sudo: yes
+  yum: name=httpd state=latest
+
+- name: Httpd is service start
+  sudo: yes
+  service: name=httpd state=running enabled=yes
+
+#- name: Configure apache
+ # sudo: yes
+#  template: src=httpd.conf.tpl dest=/etc/httpd/conf/httpd.conf
+#  notify:
+#   - restart httpd
+
+- name: Change default apache vhost
+  template: src=default.tpl dest=/etc/httpd/conf.d/000-default.conf
+
+
+- name: SELinux to enforcing
+  sudo: yes
+  command: setenforce 0
+  notify:
+    - restart httpd
+
+
+#- name: Add ports 80, 443 to firewall
+#  shell:  firewall-cmd --permanent --zone=public --add-service=http
+#  shell:  firewall-cmd --zone=public --add-port=80/tcp --permanent
+#  shell:  firewall-cmd --zone=public --add-port=443/tcp --permanent
+#  shell:  firewall-cmd --reload
+
+#- name: Flush iptables
+#  shell: iptables -F
